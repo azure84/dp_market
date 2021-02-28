@@ -1,0 +1,44 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include sidebar.pug
+  +admin_sidebar('Manage Consumers')
+
+block content
+  .row: .col-lg-12
+    +page-title(consumer.email, ['Manage Consumers', 'Consumer Details'])
+  .row
+    .col-xl-3
+      +cardbox('Default Price', consumer.price)
+    .col-xl-3
+      +cardbox('Default Epsilon', consumer.epsilon)
+    .col-xl-3
+      +cardbox('Point', consumer.point)
+    .col-xl-3
+      +cardbox('Credit', consumer.credit)
+  
+  .row
+    .col-lg-6
+      +card('Negotiating Questions')
+        .table-responsive
+          table.table
+            thead
+              tr
+                th Question Name
+            tbody
+              each question in negotiating_questions
+                tr
+                  td: a(href=`/admin/manage/questions/${question.id}`)= question.title
+    .col-lg-6
+      +card('Negotiated Questions')
+        .table-responsive
+          table.table
+            thead
+              tr
+                th Question Name
+            tbody
+              each question in negotiated_questions
+                tr
+                  td: a(href=`/admin/manage/questions/${question.id}`)= question.title
+
+

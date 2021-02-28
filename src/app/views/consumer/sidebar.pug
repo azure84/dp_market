@@ -1,0 +1,14 @@
+mixin consumer_sidebar(active='')
+  +sidebar-elem('remixicon-dashboard-line', 'Consumer', '/consumer')
+  +sidebar-elem('remixicon-pages-line', 'Manage Questions')
+    li
+      a(href='/consumer/negotiation')
+        | Negotiating Questions
+    li
+      a(href='/consumer/question')
+        | Negotiated Questions
+  +sidebar-elem('remixicon-vip-diamond-line', 'Manage Credit', '/consumer/credit')
+
+
+  //+sidebar(active,'Consumer', '/consumer', 'Manage Questions', '/consumer/negotiation', 'Manage Credit/Point', '/consumer/credit')
+  //-+sidebar(active,'Consumer', '/consumer', 'Settings', '/consumer/profile', 'Manage Questions', '/consumer/negotiation', 'Manage Credit/Point', '/consumer/credit')

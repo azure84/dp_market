@@ -1,0 +1,15 @@
+include ./mixins/index.pug
+html
+  head
+    title Hello World
+    include head.pug
+    link(rel='stylesheet', href='/assets/css/style.css')
+    block style
+  body
+    .container
+      include header.pug
+    .container
+      include alert.pug
+    block content
+    include script.pug
+    block script

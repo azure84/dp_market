@@ -1,0 +1,128 @@
+extends ../../sidebar-boilerplate.pug
+
+block sidebar
+  include ../sidebar.pug
+  +admin_sidebar('Visualization')
+
+block style
+  style.
+    svg{
+      border: 1px solid;
+    }
+    .bar{
+      fill:skyblue;
+    }
+    .bar:hover{
+      fill:blue;
+    }
+    .bar2{
+      fill:pink;
+    }
+    .bar2:hover{
+      fill:hotpink;
+    }
+    .text{
+      fill:white;
+      font-weight:bold;
+    }
+
+block content
+  .white
+    h2 Visualization
+    svg(width="500" height="300")
+
+block script
+  script.
+
+    var dataset = [{x:'A', y:9, z:39}, {x:'B', y:19, z:29}, {x:'C', y:29, z:19}, {x:'D', y:39, z:9},
+                    {x:'E', y:29, z:19}, {x:'F', y:19, z:29}, {x:'G', y:9, z:39}]; 
+    var svg = d3.select("svg"); 
+    var width = parseInt(svg.style("width"),10)-30;
+    var height = parseInt(svg.style("height"),10)-20;
+    var xScale = d3.scaleBand()
+                .domain(dataset.map(function(d){
+                    return d.x;
+                }))
+                .range([0,width]).padding(0.2);
+    var svgG = svg.append("g")
+                .attr("transform","translate(30,0)");
+    var yScale = d3.scaleLinear()
+                .domain([0,d3.max(dataset, function(d){
+                    if(d.y > d.z){
+                        return d.y;
+                    }
+                    else{
+                        return d.z;
+                    }
+                })])
+                .range([height,0]);
+
+    svgG.selectAll("rect")
+        .data(dataset)
+        .enter().append("rect")
+        .attr("class","bar")
+        .attr("height",function(d,i){
+            return height-yScale(d.y);
+        })
+        .attr("width", xScale.bandwidth()/2)
+        .attr("x",function(d,i){
+            return xScale(d.x);
+        })
+        .attr("y",function(d,i){
+            return yScale(d.y);
+        })
+
+    svgG.selectAll("text")
+        .data(dataset)
+        .enter().append("text")
+        .text(function(d){
+            return d.y;
+        })
+        .attr("class","text")
+        .attr("x",function(d,i){
+            return xScale(d.x)+xScale.bandwidth()/4;
+        })
+        .style("text-anchor","middle")
+        .attr("y",function(d,i){
+            return yScale(d.y)+15;
+        })
+
+    svgG.selectAll("p")
+        .data(dataset)
+        .enter().append("rect")
+        .attr("class","bar2")
+        .attr("height",function(d,i){
+            return height-yScale(d.z);
+        })
+        .attr("width", xScale.bandwidth()/2)
+        .attr("x",function(d,i){
+            return xScale(d.x)+(xScale.bandwidth()/2);
+        })
+        .attr("y",function(d,i){
+            return yScale(d.z);
+        })
+
+    svgG.selectAll("p")
+        .data(dataset)
+        .enter().append("text")
+        .text(function(d){
+            return d.z;
+        })
+        .attr("class","text")
+        .attr("x",function(d,i){
+            return xScale(d.x)+(xScale.bandwidth()/4*3);
+        })
+        .style("text-anchor","middle")
+        .attr("y",function(d,i){
+            return yScale(d.z)+15;
+        })
+
+    svgG.append("g")
+        .attr("stroke","white")
+        .attr("transform", "translate(0,"+(height)+")")
+        .call(d3.axisBottom(xScale));
+    svgG.append("g")
+        .attr("stroke","white")
+        .call(d3.axisLeft(yScale).ticks(10));
+    d3.selectAll("line").attr("stroke","white");
+    d3.selectAll("path").attr("stroke","white");

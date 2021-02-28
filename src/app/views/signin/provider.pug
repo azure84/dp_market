@@ -1,0 +1,26 @@
+extends ../boilerplate
+
+block content
+  .account-page.mt-5.mb-5
+    .container
+      .row.justify-content-center
+        .col-md-8.col-lg-6.col-xl-5
+          .card
+            .card-body.p-4
+              .text-center.w-75.m-auto
+                h3.white PRIVATA
+                p.text-muted.mb-4.mt-3 Provider Sign In
+
+              ul
+                each error in errors
+                  li= error
+              form(method='POST', action=`/signin/${type}`)
+                .form-group.mb-3
+                  label email
+                  input.form-control(type='text', name='email', autocomplete='off', placeholder='test_provider{num}@test.com')
+                .form-group.mb-4
+                  label password
+                  input.form-control(type='password', name='password', placeholder='test1234')
+                .form-group.mb-3.text-center
+                  input.btn.btn-primary.btn-block(type='submit', value='Sign in')
+

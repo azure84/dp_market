@@ -1,0 +1,6 @@
+mixin sidebar(active='', ...args)
+  ul.nav.flex-column
+  - for (let i = 0; i < args.length; i+= 2) {
+    li.nav-item
+      a.nav-link(class=(active === args[i] ? 'active' : ''), href=args[i+1])= args[i]
+  - }

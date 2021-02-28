@@ -1,0 +1,8 @@
+node_modules/
+*.log
+__pycache__
+*.xlsx
+*.pptx
+.vs
+venv
+.DS_Store

@@ -1,0 +1,25 @@
+﻿extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +consumer_sidebar('Credit/Point')
+block content
+  .row: .col-lg-12
+    +page-title('Manage Credit', ['Manage Credit'])
+  .row
+    .col-xl-3
+      +cardbox('Credit')
+        h2.text-center= credit
+        button.btn.btn-primary(style='opacity: 0;') &nbsp;
+    .col-xl-3(data-intro='click the button to charge the budget.')
+      +cardbox('Point')
+        h2.text-center= point
+        form.form(action='/consumer/credit', method='POST')
+          input.btn.btn-block.btn-primary(type='submit', value='Earn Point')
+    .clearfix
+
+  .row.text-center.mt-5.d-none
+    .col-md-6
+      p(style="font-size:25px") Credit 변화 추이
+    .col-md-6
+      p(style="font-size:25px") Point 변화 추이

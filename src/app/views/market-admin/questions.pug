@@ -1,0 +1,25 @@
+﻿extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +admin_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title('Total Questions', ['Questions', 'Total Questions'])
+
+  .row: .col-lg-12
+    +card('Questions')
+      .table-responsive
+        table.table.table-borderless.mt-2.mb-0
+          thead.thead-light
+            tr
+              th Question Name
+              th Count of Approved
+              th Consumer
+          tbody
+            each question in questions
+              tr
+                td: a(href=`/admin/questions/${question.id}`)= question.title
+                td= question.reply_count
+                td= question.Consumer.email

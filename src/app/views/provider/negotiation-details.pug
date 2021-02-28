@@ -1,0 +1,39 @@
+﻿extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar
+  +provider_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title(current_question.Question.title, ['Manage Questions', 'Negotiating Questions', 'Details'])
+ 
+  .row: .col-lg-12
+    +card('Negotiating Question')
+      .row
+        .col-md-6
+          h3= current_question.Question.title
+        .offset-md-2.col-md-4
+          .mt-3.float-right
+            .m-b-10
+              strong Consumer :&nbsp;
+              span.float-right= current_question.Consumer.email
+      .row.mt-3
+        .col-md-6(data-intro='you can check the negotiating price and epsilon.')
+          h5 Negotiating Price
+          p= current_question.negotiation_price
+          h5 Negotiating Epsilon
+          p= current_question.negotiation_epsilon
+      .row.mt-3: .col-lg-12(data-intro='if you accept the negotiating price, click the approve button. If not, click the deny button.')
+        if current_question.p_approval_flag == 'approve'
+          .text-center.white
+            | provider approved
+        else
+          .mb-5
+          .container.white(style= "text-align: center")
+            form(method='POST', style='display:inline-block', action=`/provider/negotiation/${current_question.Question.id}`)
+              input.btn.btn-primary.mr-1(type="submit" value='approve')
+              input(type='hidden', name='type', value='approve')
+            form(method='POST', style='display:inline-block',  action=`/provider/negotiation/${current_question.Question.id}`)
+              input.btn.btn-danger.ml-1(type="submit" value='deny')
+              input(type='hidden', name='type', value='deny') 

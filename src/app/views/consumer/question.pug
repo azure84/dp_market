@@ -1,0 +1,24 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +consumer_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title('Negotiated Questions', ['Manage Questions', 'Negotiated Questions'])
+  .row: .col-lg-12
+    +cardbox('Questions')
+      .table-responsive
+        table.table.table-borderless.mb-0
+          thead.thead-light
+            tr
+              th Question Name
+          tbody
+            each question in complete_questions
+              tr
+                td: a(href=`/consumer/question/${question.id}`)= question.title 
+ 
+
+
+

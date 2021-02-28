@@ -1,0 +1,14 @@
+extends ../boilerplate.pug
+
+block content
+  .container.h-100.white
+    .row.h-100.d-flex.align-items-center.flex-row
+      .col-md-6.mx-auto.text-center
+        .d-none
+          a.btn.btn-primary.btn-lg.mr-3(href='/signup/consumer') Consumer
+          a.btn.btn-primary.btn-lg.ml-3(href='/signup/provider') Provider
+        .mt-3
+        form(style='display: inline-block;' action='/signup/demo_consumer', method='POST')
+          input.btn.btn-primary.btn-lg.mr-3(type='submit', value='Demo Consumer', data-intro='This is the menu for demo consumer.')
+        form(style='display: inline-block;' action='/signup/demo_provider', method='POST')
+          input.btn.btn-primary.btn-lg.mr-3(type='submit', value='Demo Provider', data-intro='This is the menu for demo provider.')

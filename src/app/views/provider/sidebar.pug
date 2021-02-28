@@ -1,0 +1,11 @@
+mixin provider_sidebar(active)
+  +sidebar-elem('remixicon-dashboard-line', 'Provider', '/provider')
+  +sidebar-elem('remixicon-pages-line', 'Manage Questions')
+    li
+      a(href='/provider/negotiation')
+        | Negotiating Questions
+    li
+      a(href='/provider/question')
+        | Negotiated Questions
+  +sidebar-elem('remixicon-vip-diamond-line', 'Manage Credit', '/provider/credit')
+  //-+sidebar(active, 'Provider', '/provider', 'Settings', '/provider/profile', 'Manage Questions', '/provider/negotiation', 'Manage Credit/Point', '/provider/credit')

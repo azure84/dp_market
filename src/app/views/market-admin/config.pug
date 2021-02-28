@@ -1,0 +1,9 @@
+extends ../sidebar-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +admin_sidebar('Configuration')
+
+block content
+  .white
+    h2 Matching Parameter Setup

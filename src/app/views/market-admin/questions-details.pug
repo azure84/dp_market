@@ -1,0 +1,56 @@
+﻿extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +admin_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title(question.title, ['Questions', 'Total Questions', 'Question Details'])
+    
+  .row: .col-lg-12
+    +card('Question')
+      .row
+        .col-md-6
+          h3= question.title
+          p= question.description
+        .offset-md-2.col-md-4
+          .mt-3.float-right
+            .m-b-10
+              strong Consumer :&nbsp;
+              span.float-right= question.Consumer.email
+            .m-b-10
+              strong Count of Approved :&nbsp;
+              span.float-right= question.reply_count
+      .row.mt-3
+        .col-md-6
+          h5 Expiring At
+          p= question.expired_at
+      .row: .col-lg-12
+        if question.is_finish != true
+          .container.white(style="margin-top: 100px;")
+             .text-center
+               form.form(action=`/admin/questions/${question.id}`, method='POST')
+                input.btn.btn-primary(type='submit', value='Finish Question')
+        else
+            .text-center.white
+              | question is finished
+  //-
+   form
+     .row(style="margin-top: 20px;")
+       each option in question.QuestionOptions
+         .col-md-2
+           .form-check
+             input.form-check-input(type='radio', name='radio', value=option.value)
+             label.form-check-label= option.label
+
+   .row(style="margin-top: 20px;")
+     .col-md-3.mx-auto
+       ul(style='list-style-type: none;')
+         li
+           strong expring at:
+           | &nbsp;#{question.expired_at}
+         li
+           strong count of approved:
+           | &nbsp;#{question.reply_count}
+

@@ -1,0 +1,12 @@
+mixin admin_sidebar(active)
+  +sidebar-elem('remixicon-question-answer-line', 'Questions', '/admin/questions')
+  +sidebar-elem('remixicon-group-line', 'Manage Providers', '/admin/manage/providers')
+  +sidebar-elem('remixicon-group-line', 'Manage Consumers', '/admin/manage/consumers')
+  +sidebar-elem('remixicon-exchange-line', 'Manage Transactions')
+    li
+      a(href='/admin/manage/transactions/negotiation')
+        | Negotiating Questions
+    li
+      a(href='/admin/manage/transactions/question')
+        | Negotiated Questions
+  //-+sidebar(active,'Questions', '/admin/questions', 'Manage Providers','/admin/manage/providers', 'Manage Consumers', '/admin/manage/consumers', 'Manage Transactions', '/admin/manage/transactions', 'Visualization', '/admin/visualization')

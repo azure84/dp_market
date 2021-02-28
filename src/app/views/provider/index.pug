@@ -1,0 +1,33 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +provider_sidebar
+block content
+  .row: .col-lg-12
+    +page-title('Provider', ['Provider'])
+  .row
+    .col-xl-6(data-intro='You can check the recently registered question.')
+      +card('Recent Questions')
+        .table-responsive
+          table.table.table-borderless.mt-2.mb-0
+            thead.thead-light
+              tr
+                th Question Name
+            tbody
+              each question in recent_questions
+               tr
+                td: a(href=`/provider/questions/${question.id}`)= question.title 
+        a.mt-5.btn.btn-primary.btn-block(href=`/provider/questions`) read more
+    .col-xl-6(data-intro='You can check the negotiation proceeding question.')
+      +card('Negotiating Questions')
+        .table-repsonsive
+          table.table.table-borderless.mb-0
+            thead.thead-light
+              tr
+                th Question Name
+            tbody
+              each question in unapproved_questions
+               tr
+                 td: a(href=`/provider/negotiation/${question.id}`)=question.title 
+        a.mt-5.btn.btn-primary.btn-block(href=`/provider/negotiation`) read more

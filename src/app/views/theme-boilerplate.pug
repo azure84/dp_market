@@ -1,0 +1,69 @@
+include ./mixins/index.pug
+include ./mixins/theme.pug
+
+mixin sidebar-elem(icon, text, url)
+  li
+    a.waves-effect(href= url ? url : 'javascript: void(0);')
+      //-i.remixicon-dashboard-line
+      i(class=icon)
+      //-span Dashboard
+      span= text
+    ul.nav-second-level(aria-expanded='false')
+      if block
+        block
+
+doctype html
+html
+  head
+    title Hello World
+    include head.pug
+    block stype
+  body.left-side-menu-dark
+    //-
+      #preloader
+        #status
+          .bouncingLoader
+            div
+            div
+            div
+    #wrapper
+      .navbar-custom
+        ul.list-unstyled.topnav-menu.float-right.mb-0
+          li.dropdown.notification-list
+            a.nav-link.dropdown-toggle.nav-user.mr-0.waves-effect.waves-light(data-toggle='dropdown', href='#', role='button')
+              span.pro-user-name.ml-1
+                = user.email
+                i.mdi.mdi-chevron-down
+            .dropdown-menu.dropdown-menu-right.profile-dropdown
+              - console.log(user.constructor.name)
+              a.dropdown-item.notify-item(href=user.constructor.name == 'Consumer' ? '/consumer' : '/provider') 
+                | Profile
+              a.dropdown-item.notify-item(href='/admin/manage/providers')
+                | Admin
+              a#logout.dropdown-item.notify-item(href='javascript:void(0);')
+                i.remixicon-logout-box-line
+                | Logout
+                form.m-0.d-none#logout-form(method='POST', action='/signout')
+                  input.nav-link.btn.btn-primary.mr-4(type='submit', value='logout')
+        .logo-box
+        .list-unstyled.topnav-menu.topnav-menu-left.m-0
+          li: button.button-menu-mobile.waves-effect.waves-light
+            i.fe-menu
+          li
+            a.nav-link.text-success#tutorial-enable(href='#', style='display: none;') Start Tutorial
+          li
+            a.nav-link.text-danger#tutorial-disable(href='#', style='display: none;') Stop Tutorial
+            
+      .left-side-menu
+        .slimscroll-menu
+          #sidebar-menu
+            ul#side-menu.metis-menu
+              li.menu-title Navigation
+              block sidebar
+      .content-page
+        .content
+          .container-fluid
+            block content
+  include script.pug
+  block script
+

@@ -1,0 +1,41 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +consumer_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title('Consumer', ['Consumer'])
+  .row
+    .col-xl-6
+      +card('Recent Questions')
+        a.btn.btn-primary(href=`/consumer/create-question`, data-intro='Click this button, you can create your own question.')
+          i.mdi.mdi-plus-circle
+          | create question
+        .table-responsive
+          table.table.table-borderless.mt-2.mb-0
+            thead.thead-light
+              trG
+                th Question Name
+            tbody
+              each question in recent_questions
+               tr
+                td: a(href=`/consumer/questions/${question.id}`)= question.title 
+        a.mt-5.btn.btn-primary.btn-block(href=`/consumer/questions`) read more
+    .col-xl-6
+      +card('Negotiating Questions')
+        .table-responsive
+          table.table.table-borderless.mb-0
+            thead.thead-light
+              tr
+                th Question Name
+            tbody
+              each question, index in processing_questions
+                tr
+                  td
+                    if index == 0
+                      a(href=`/consumer/negotiation/${question.id}`, data-intro='Click this name, you can move to the question page.')=question.title 
+                    else
+                      a(href=`/consumer/negotiation/${question.id}`)=question.title 
+        a.mt-5.btn.btn-primary.btn-block(href=`/consumer/negotiation`) read more

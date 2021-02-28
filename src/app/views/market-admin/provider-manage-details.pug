@@ -1,0 +1,64 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include sidebar.pug
+  +admin_sidebar('Manage Providers')
+
+block content
+  .row: .col-lg-12
+    +page-title(provider.email, ['Manage Providers', 'Provider Details'])
+  .row
+    .col-xl-3
+      +cardbox('Default Price', provider.price)
+    .col-xl-3
+      +cardbox('Default Epsilon', provider.epsilon)
+    .col-xl-3
+      +cardbox('Point', provider.point)
+    .col-xl-3
+      +cardbox('Credit', provider.credit)
+
+  .row
+    .col-lg-6
+      +card('Negotiating Questions')
+        .table-responsive
+          table.table
+            thead
+              tr
+                th question title
+                th consumer ID
+                th negotiating price
+                th negotiating epsilon
+                th point
+            tbody
+              each question in negotiating_questions
+                tr
+                  td
+                    a(href=`/admin/questions/${question.id}`)= question.title
+                  td= provider.email
+                  td= question.Transactions[0].negotiation_price
+                  td= question.Transactions[0].negotiation_epsilon
+                  td= question.Transactions[0].point_change
+    .col-lg-6
+      +card('Negotiated Questions')
+        .table-responsive
+          table.table
+            thead
+              tr
+                th question title
+                th consumer ID
+                th negotiating price
+                th negotiating epsilon
+                th point
+            tbody
+              each question in negotiated_questions
+                tr
+                  td
+                    a(href=`/admin/questions/${question.id}`)= question.title
+                  td= provider.email
+                  td= question.Transactions[0].negotiation_price
+                  td= question.Transactions[0].negotiation_epsilon
+                  td= question.Transactions[0].point_change
+          
+
+          
+

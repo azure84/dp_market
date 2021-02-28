@@ -1,0 +1,23 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +provider_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title('Manage Credit', ['Manage Credit'])
+  .row
+    .col-xl-3
+      +cardbox('Credit')
+        h2.text-center= credit
+    .col-xl-3
+      +cardbox('Point')
+        h2.text-center= point
+    .clearfix
+
+  .row.text-center.mt-5.d-none
+    .col-md-6
+      p(style="font-size:25px") Credit 변화 추이
+    .col-md-6
+      p(style="font-size:25px") Point 변화 추이

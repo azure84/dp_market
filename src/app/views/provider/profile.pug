@@ -1,0 +1,22 @@
+﻿extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar
+  +provider_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title('Profile', ['Profile'])
+
+  .row: .col-xl-4
+    +cardbox()
+      .text-center
+        img.rounded-circle.avatar-xl.img-thumbnail(alt='profile-image', src='/assets/img/profile.jpg')
+        h4.mb-0= user.email
+        .text-left.mt-3
+          p.text-muted.mb-2.font-13
+            strong Default Price :
+            span.ml-2= user.price
+          p.text-muted.mb-2.font-13
+            strong Default Epsilon
+            span.ml-2= user.epsilon

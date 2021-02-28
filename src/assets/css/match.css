@@ -1,0 +1,27 @@
+.chart,
+.chart svg {
+  width: 400px;
+  height: 600px;
+}
+.links line {
+  stroke: #777;
+  stroke-width: 2px;
+}
+
+
+.l-nodes circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+.r-nodes circle {
+  fill: #3BAD10;
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+text {
+  fill: #ffe;
+}
+

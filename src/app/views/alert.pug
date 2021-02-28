@@ -1,0 +1,12 @@
+.row.mt-2
+  .col-md-12
+    if errors && errors.length
+      .alert.alert-danger
+        ul.m-0
+          each error in errors
+            li= error
+    if successes && successes.length
+      .alert.alert-success
+        ul.m-0
+          each success in successes
+            li= success

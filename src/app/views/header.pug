@@ -1,0 +1,32 @@
+if user
+  ul.nav.justify-content-end
+    li.nav-item
+      a.nav-link.disabled(href='#') Hello, #{user.email}
+    li.nav-item
+      form.m-0(method='POST', action='/signout')
+        input.nav-link.btn.btn-primary.mr-4(type='submit', value='logout')
+    li.nav-item
+      if user.is_provider
+        a.nav-link.btn.btn-primary(href='/provider/profile') Profile
+      else if user.is_consumer
+        a.nav-link.btn.btn-primary(href='/consumer/profile') Profile
+    li.nav-item
+      a.nav-link.ml-4.btn.btn-primary(href='/admin/manage/providers') Admin
+    li.nav-item
+      a.nav-link.ml-4.btn.btn-success#tutorial-enable(href='#') Start Tutorial
+    li.nav-item
+      a.nav-link.ml-4.btn.btn-danger#tutorial-disable(href='#') Stop Tutorial
+else
+  ul.nav.justify-content-end
+    li.nav-item
+      a.nav-link.ml-4.btn.btn-success#tutorial-enable(href='#') Start Tutorial
+    li.nav-item
+      a.nav-link.ml-4.btn.btn-danger#tutorial-disable(href='#') Stop Tutorial
+//-
+  form.form-inline.justify-content-end
+    label.sr-only(for='inlineFormInputName2') Name
+    input.form-control.mb-2.mr-sm-2#inlineFormInputName2(placeholder='Email...')
+    label.sr-only(for='inlineFormInputPass') Password
+    input.form-control.mb-2.mr-sm-2#inlineFormInputPass(placeholder='Password...')
+    button.btn.btn-primary.mb-2(type='submit') 로그인
+

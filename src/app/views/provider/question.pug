@@ -1,0 +1,21 @@
+﻿extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar
+  +provider_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title('Negotiated Questions', ['Manage Questions', 'Negotiated Questions'])
+
+  .row: .col-lg-12
+    +cardbox('Questions')
+      .table-responsive
+        table.table.table-borderless.mb-0
+          thead.thead-light
+            tr
+              th Question Name
+          tbody
+            each question in approved_questions
+              tr
+                td: a(href=`/provider/question/${question.id}`)= question.title

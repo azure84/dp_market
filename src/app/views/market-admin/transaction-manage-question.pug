@@ -1,0 +1,27 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +admin_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title('Transaction List', ['Manage Transactions', 'Negotiated Questions'])
+  .row: .col-lg-12
+    +card('list')
+      .table-responsive
+        table.table
+          thead
+            tr
+              th question title
+              th consumer id
+              th count of approved
+
+          tbody
+            each question in questions
+              tr
+                td
+                  a(href=`/admin/manage/questions/${question.id}`)= question.title
+                td= question.Consumer.email
+                td= question.reply_count
+

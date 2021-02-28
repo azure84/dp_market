@@ -1,0 +1,9 @@
+mixin form-check-inline
+  .form-check.form-check-inline
+    if block
+      block
+
+mixin form-check-radio-inline(name, value, label)
+  +form-check-inline
+    input.form-check-input(type='radio', name=name, value=value)&attributes(attributes)
+    label.form-check-label= label

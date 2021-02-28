@@ -1,0 +1,95 @@
+extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +consumer_sidebar('Manage Questions')
+
+block content
+  .row: .col-lg-12
+    +page-title('Create Question', ['Consumer', 'Create Question'])
+  .row: .col-xl-12
+    +card('Question Form')
+      p.sub-header Support numeric, categorical question form
+      form.form(action='/consumer/create-question' method='post', onsubmit='return parseSelect();')
+    
+        .form-group.row
+          label.col-sm-2 question title
+          input.col-sm-10.form-control(type='text' placeholder='Enter the question title' name='title', autocomplete='off')
+          input(type='hidden', name='select-data')
+        .form-group.row
+          label.col-sm-2 question description
+          textarea.col-sm-10.form-control(rows=5, name='description' placeholder='Enter the question description')
+        .form-group.row(data-intro='you can determine the query type: Numeric or categorical.')
+          label.col-sm-2 question type
+          .col-sm-10
+            +form-check-radio-inline('type','integer', 'numeric')(class='integer-type', checked)
+            +form-check-radio-inline('type','select', 'select')(class='select-type')
+        .show-numeric
+          .form-group.row
+            label.col-sm-2 Min
+            input.col-sm-10.form-control(type='number', name='min', placeholder='Min of input')
+          .form-group.row
+            label.col-sm-2 Max
+            input.col-sm-10.form-control(type='number', name='max', placeholder='Max of input')
+        .form-row.form-group.show-select.d-none.row
+          label.col-sm-2 Select Option
+          .col-sm-10
+            .row
+              .col-sm-2
+                input.form-control.option-text(type='text')
+              .col-sm-1
+                button.btn.btn-primary.add-option(type='button') &plus;
+          .col-sm-10.offset-sm-2
+            .option-list.mt-1
+        .form-group.row(data-intro='you can set the minimum required epsilon value.')
+          label.col-sm-2 epsilon
+          input.col-sm-10.form-control(type='number', name='epsilon', placeholder='Enter epsilon', step='0.1', value = user.epsilon)
+        .form-group.row(data-intro='you can set the price per epsilon 0.1 for this question\'s answer.')
+          label.col-sm-2 price
+          input.col-sm-2.form-control(type='number', name='price', placeholder= 'Enter price', value = user.price)
+        .form-group.row
+          .offset-md-2.col-md-10.pl-0
+            input.btn.btn-primary(type="submit" value="Submit")
+
+block script
+  script.
+    function parseSelect() {
+      if ($('[name=type]:checked').val() == 'integer') {
+        return true;
+      }
+      var arr = JSON.stringify($('.option-list .form-check-label').map(function() {
+        return $(this).text();
+      }).get());
+      console.log(arr);
+      $('[name=select-data]').val(arr);
+      return true;
+    }
+
+    $(document).ready(function() {
+      $('.select-type').click(function() {
+        $('.show-select').removeClass('d-none');
+        $('.show-numeric').addClass('d-none');
+      });
+      $('.integer-type').click(function() {
+        $('.show-select').addClass('d-none');
+        $('.show-numeric').removeClass('d-none');
+      });
+      $('.option-text').on('keydown', function(e) {
+        if (e.keyCode == 13) {
+          $('.add-option').click();
+          e.preventDefault();
+        }
+      })
+      $('.add-option').click(function() {
+        var content = $('.option-text').val();
+        if (content == '') { return; }
+        $('.option-list').append("<div class='form-check form-check-inline'>" +
+          "<input class='form-check-input' type='radio' disabled>" +
+          "<label class='form-check-label'>" + $('.option-text').val() + "</label><span class='ml-1 close-btn' style='cursor: pointer;'><i class='fas fa-times'></i></span></div>");
+        $('.option-text').val('');
+      });
+      $(document).on('click', '.close-btn', function() {
+        $(this).closest('.form-check').remove();
+      });
+    });
+    

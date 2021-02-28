@@ -1,0 +1,66 @@
+﻿extends ../theme-boilerplate.pug
+
+block sidebar
+  include ./sidebar.pug
+  +provider_sidebar
+
+block content
+  .row: .col-lg-12
+    +page-title(current_question.title, ['Provider', 'Question Response'])
+
+  .row: .col-lg-12
+    +card('Question Form')
+      p.sub-header
+        | This question created by 
+        strong= current_question.Consumer.email
+        form(method='POST', action=`/provider/questions/${current_question.id}`, onsubmit=`return LDP("${current_question.type}");`)
+          .form-group.row
+            label.col-md-2 Description
+            textarea.form-control.col-md-10(readonly)= current_question.description
+
+          if current_question.type == 'select'
+            .form-group.row
+              label.col-md-2 Response
+              .col-md-10: .row
+                each option, index in current_question.QuestionOptions
+                  .col-md-2
+                    .custom-control.custom-radio
+                      input.custom-control-input(type='radio', name='radio', value=option.value, id='optionRadio' + index)
+                      label.custom-control-label(for='optionRadio' + index)= option.label
+              input(type='hidden', name='perturbed')
+          else
+            .form-group.row
+              label.col-md-2 Response
+              input.col-md-10.form-control(type='text', name='value', placeholder='Enter the value', autocomplete='off')
+              input(type='hidden', name='perturbed')
+
+          .form-group.row
+            label.col-md-2 epsilon
+            input.col-md-10.form-control(type="number", step='0.1', name="p_epsilon", min="0", max="10", value=user.epsilon)
+          .form-group.row
+            label.col-md-2 price
+            input.col-md-10.form-control(type="number" name="p_price", min=current_question.numericMin,max=current_question.numericMax,value=user.price)
+
+          .form-group.row
+            input.offset-md-2.btn.btn-primary(type="submit" , value='Submit')
+
+block script
+  script(src='/assets/js/numeric.js')
+  script(src='/assets/js/rappor.js')
+  script.
+    function LDP(type) {
+      if (type == 'select') {
+        var user_value = $('[name=radio]:checked').val();
+        var perturbed = rappor_perturb(parseInt(user_value)).perturbed
+        $('[name=perturbed]').val(perturbed);
+        return true;
+      } else {
+        var user_value = $('[name=value]').val();
+        var user_epsilon = $('[name=p_epsilon]').val();
+
+        var perturbed = numeric([user_value], user_epsilon, #{current_question.numericMin}, #{current_question.numericMax});
+        $('[name=perturbed]').val(perturbed);
+        // alert('perturbed: ' + perturbed);
+        return true;
+      }
+    }

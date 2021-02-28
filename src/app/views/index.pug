@@ -1,0 +1,20 @@
+extends boilerplate.pug
+
+block content
+  .container.h-100.white
+    .row.align-items-center.h-100.d-flex.flex-row
+      .col-md-6.text-center.mx-auto
+        h2.inline-header Protect, Negotiate, Share
+        h2.inline-header Your personal information
+        if !user
+          div
+            data-intro.dfd
+              a.mt-5.btn.btn-primary.btn-lg.mr-2(href='/signup', data-intro='If you are a demo user, start with Sign Up.') Sign Up
+              a.mt-5.btn.btn-primary.btn-lg.ml-2(href='/signin', data-intro='Or, you can sign in.') Sign In
+
+block script
+  script.
+    $(document).ready(function() {
+      //introJs().start();
+    })
+
